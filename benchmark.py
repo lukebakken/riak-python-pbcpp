@@ -11,6 +11,13 @@ print("  Iterations: {0}".format(iterations))
 
 impl = os.environ['PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION'] or 'python'
 
+if impl == 'cpp':
+	try:
+		print("Importing riak._riak_pbcpp:")
+		import riak._riak_pbcpp
+	except ImportError as e:
+		print("ImportError:", e)
+
 with benchmark.measure() as b:
     for i in xrange(1, 4):
         with b.report('s-{}-{}'.format(impl, i)):
