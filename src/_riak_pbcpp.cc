@@ -5,10 +5,10 @@ static PyMethodDef RiakPbMethods[] = {
 };
 
 PyMODINIT_FUNC
-initriak_pb(void)
+init_riak_pbcpp(void)
 {
 	PyObject *m;
-	m = Py_InitModule("riak.riak_pb2", RiakPbMethods);
+	m = Py_InitModule("riak._riak_pbcpp", RiakPbMethods);
 	if (m == NULL)
 		return;
 }

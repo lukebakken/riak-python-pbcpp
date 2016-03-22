@@ -10,10 +10,10 @@ class riak_pb_build_ext(distutils.command.build_ext.build_ext):
     def build_extensions(self):
         for e in self.extensions:
             # e.extra_compile_args = [ '-v' ]
-            if e.name == 'riak.riak_kv_pb2':
+            if e.name == 'riak._riak_kv_pbcpp':
                 # NB: can add '-v' to args
                 ld_path_arg = '-L{}'.format(os.path.dirname(self.get_ext_fullpath(e.name)))
-                e.extra_link_args = [ ld_path_arg, '-l:riak_pb2.so']
+                e.extra_link_args = [ ld_path_arg, '-l:_riak_pbcpp.so']
         distutils.command.build_ext.build_ext.build_extensions(self)
 
 setup(
@@ -22,11 +22,11 @@ setup(
     packages=[ 'riak' ],
     description='Test Python + CPP',
     ext_modules=[
-        distutils.extension.Extension('riak.riak_pb2',
-            sources=['src/riak_pb2.c','src/riak.pb.cc'],
+        distutils.extension.Extension('riak._riak_pbcpp',
+            sources=['src/_riak_pbcpp.cc','src/riak.pb.cc'],
             libraries=['protobuf']),
-        distutils.extension.Extension('riak.riak_kv_pb2',
-            sources=['src/riak_kv_pb2.c','src/riak_kv.pb.cc'],
+        distutils.extension.Extension('riak._riak_kv_pbcpp',
+            sources=['src/_riak_kv_pbcpp.cc','src/riak_kv.pb.cc'],
             libraries=['protobuf'])
     ],
     license='Public Domain',
